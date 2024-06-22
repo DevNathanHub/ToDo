@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Checkbox, Button } from '@chakra-ui/react';
+import {
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
+  ModalCloseButton, FormControl, FormLabel, Input, Checkbox, Button
+} from '@chakra-ui/react';
 import useAuthConfig from '../Auth/AuthConfig';
 import fetchTodos from '../utils/fetchTodos';
+import { useUser } from '../context/UserContext';
 
 const UpdateTodo = ({ id, title: initialTitle, description: initialDescription, completed: initialCompleted, isOpen, onClose }) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const [completed, setCompleted] = useState(initialCompleted);
   const config = useAuthConfig();
+  const {user} = useUser()
+  const userId = user._id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/api/todos/${id}`, config, { title, description, completed });
-      fetchTodos();// Call fetchTodos to update the todos list
+      await axios.put(`http://localhost:3000/api/todos/${id}`, { title, description, completed, userId }, config);
+      fetchTodos(); // Call fetchTodos to update the todos list
       onClose(); // Close the modal after updating
     } catch (error) {
       console.error('Failed to update todo:', error);
+      // Add error handling here (e.g., show an error message to the user)
     }
   };
 

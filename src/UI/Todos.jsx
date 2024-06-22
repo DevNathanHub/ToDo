@@ -6,9 +6,11 @@ import TodoList from '../components/TodoList'
 
 function Todos() {
   return (
-    <Box>
-        <HStack><TodoList/></HStack>
-    </Box>
+    
+        <HStack >
+          <TodoList/>
+        </HStack>
+   
   )
 }
 

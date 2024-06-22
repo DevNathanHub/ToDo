@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,7 +22,8 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  width: 100%;
+  padding: 20px;
   min-height: 100vh;
 }
 
@@ -63,3 +63,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
