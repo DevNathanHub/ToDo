@@ -9,6 +9,8 @@ import UpdateTodo from './UpdateTodo';
 import AddTodo from './AddTodo';
 import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns';
 import { useUser } from '../context/UserContext';
+import './Update.css';
+import { baseUrl } from '../utils/baseUrl';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -21,7 +23,7 @@ const TodoList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/todos', config);
+        const response = await axios.get(`${baseUrl}/api/todos`, config);
         setTodos(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -34,7 +36,7 @@ const TodoList = () => {
   const handleDelete = async (id) => {
     console.log(userId);
     try {
-      await axios.delete(`http://localhost:3000/api/todos/${id}`, {
+      await axios.delete(`${baseUrl}/api/todos/${id}`, {
         data: { userId },
         ...config,
       });
@@ -82,7 +84,7 @@ const TodoList = () => {
       >
         {todos && todos.length > 0 ? (
           todos.map((todo) => (
-            <VStack key={todo._id} align="start" borderWidth="1px" p="4" borderRadius="20px" w="100%" mb={2}>
+            <VStack key={todo._id} align="start" borderWidth="1px" p="4" borderRadius="20px" w="100%" mb={2} className='glass'>
               <HStack align="start" justifyContent='space-between' w="100%">
                 <HStack gap={4}>
                   <Tag colorScheme={todo.completed ? 'green' : 'red'} variant={todo.completed ? 'solid' : 'outline'} cursor='none'>
@@ -114,7 +116,7 @@ const TodoList = () => {
               </HStack>
               <HStack width='100%'>
                 <Tag fontSize='xs' w='200px' variant='ghost' > {formatDate(todo.createdAt)}</Tag>
-                <Divider />
+                <Divider color='black'/>
                 {todo && todo.createdAt !== todo.updatedAt ? (
                   <Tag fontSize='xs' w='200px' variant='outline'>
                     <TagLeftIcon as={CiEdit} /> {formatDate(todo.updatedAt)}

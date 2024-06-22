@@ -19,6 +19,7 @@ import {
 import { useUser } from '../context/UserContext';
 import useAuthConfig from '../Auth/AuthConfig';
 import { FaPlusCircle } from 'react-icons/fa';
+import { baseUrl } from '../utils/baseUrl';
 
 function AddTodo() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,7 +42,7 @@ function AddTodo() {
     e.preventDefault();
     try {
       console.log("form data on add todo", formData);
-      await axios.post('http://localhost:3000/api/todos', formData, config);
+      await axios.post(`${baseUrl}/api/todos`, formData, config);
       console.log('Form submitted');
       onClose();
     } catch (error) {
@@ -62,8 +63,11 @@ function AddTodo() {
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
+      <ModalOverlay
+        bg='blackAlpha.300'
+        backdropFilter='blur(10px) hue-rotate(90deg)'
+      />
+        <ModalContent className='glass'>
           <ModalHeader>Add New Todo</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -91,7 +95,7 @@ function AddTodo() {
                   Add summary of what you have to accomplish
                 </FormHelperText>
               </FormControl>
-              <Button colorScheme="teal" type="submit">
+              <Button colorScheme="teal" type="submit" mr={3}>
                 Submit
               </Button>
             </form>

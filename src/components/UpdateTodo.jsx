@@ -1,25 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
-  ModalCloseButton, FormControl, FormLabel, Input, Checkbox, Button
+  ModalCloseButton, FormControl, FormLabel, Input, Checkbox, Button,
+  ModalFooter
 } from '@chakra-ui/react';
 import useAuthConfig from '../Auth/AuthConfig';
 import fetchTodos from '../utils/fetchTodos';
 import { useUser } from '../context/UserContext';
+import './Update.css';
+import { baseUrl } from '../utils/baseUrl';
 
 const UpdateTodo = ({ id, title: initialTitle, description: initialDescription, completed: initialCompleted, isOpen, onClose }) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const [completed, setCompleted] = useState(initialCompleted);
   const config = useAuthConfig();
-  const {user} = useUser()
+  const { user } = useUser();
   const userId = user._id;
+
+  useEffect(() => {
+    setTitle(initialTitle);
+    setDescription(initialDescription);
+    setCompleted(initialCompleted);
+  }, [initialTitle, initialDescription, initialCompleted]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/api/todos/${id}`, { title, description, completed, userId }, config);
+      await axios.put(`${baseUrl}/api/todos/${id}`, { title, description, completed, userId }, config);
       fetchTodos(); // Call fetchTodos to update the todos list
       onClose(); // Close the modal after updating
     } catch (error) {
@@ -30,26 +39,39 @@ const UpdateTodo = ({ id, title: initialTitle, description: initialDescription, 
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
+      <ModalOverlay
+        bg='blackAlpha.300'
+        backdropFilter='blur(10px) hue-rotate(90deg)'
+      />
+      <ModalContent className='glass'>
         <ModalHeader>Edit Todo</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <form onSubmit={handleSubmit}>
-            <FormControl>
-              <FormLabel>Title</FormLabel>
-              <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <form onSubmit={handleSubmit}>
+          <ModalBody>
+            <FormControl mb={2}>
+              <FormLabel>Edit Title (optional)</FormLabel>
+              <Input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter title" />
             </FormControl>
-            <FormControl>
-              <FormLabel>Description</FormLabel>
-              <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <FormControl mb={8}>
+              <FormLabel>Edit Description (optional)</FormLabel>
+              <Input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Enter description" />
             </FormControl>
-            <FormControl>
-              <Checkbox isChecked={completed} onChange={(e) => setCompleted(e.target.checked)}>Completed</Checkbox>
+            <FormControl mb={4}>
+              <Checkbox
+                isChecked={completed}
+                onChange={(e) => setCompleted(e.target.checked)}
+                size="lg"
+                colorScheme="blue"
+              >
+                Mark Complete
+              </Checkbox>
             </FormControl>
-            <Button type="submit">Save Changes</Button>
-          </form>
-        </ModalBody>
+          </ModalBody>
+          <ModalFooter>
+            <Button type="submit" colorScheme="teal" mr={3}>Save Changes</Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   );

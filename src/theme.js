@@ -25,6 +25,11 @@ const customTheme = extendTheme({
           color: 'black',
         },
       },
+      Divider: {
+        baseStyle: {
+          borderColor: '#3A2407', // Set the divider color to black
+        },
+      },
     
   },
 });

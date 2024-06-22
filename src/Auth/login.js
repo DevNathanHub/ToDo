@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { baseUrl } from '../utils/baseUrl';
 
 export async function login(formData) {
   const { email, password } = formData;
 
   if (email && password) {
     try {
-      const response = await axios.post('http://localhost:3000/api/login', { email, password });
+      const response = await axios.post(`${baseUrl}/api/login`, { email, password });
       const { token, sanitizedUser } = response.data;
       const user = {...sanitizedUser};
       console.log("new user", user);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { baseUrl } from '../utils/baseUrl';
 
 export async function signup(formData) {
   const { fullName, email, password } = formData;
@@ -6,7 +7,7 @@ export async function signup(formData) {
 
   // Simulate an API call
   // In a real app, replace this with an actual API endpoint
-  return axios.post('http://localhost:3000/api/signup', user)
+  return axios.post(`${baseUrl}/api/signup`, user)
     .then(response => {
       // Assuming the API returns a success response
       return response.data;
