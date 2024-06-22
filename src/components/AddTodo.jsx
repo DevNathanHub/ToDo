@@ -43,6 +43,7 @@ function AddTodo() {
       console.log("form data on add todo", formData);
       await axios.post('http://localhost:3000/api/todos', formData, config);
       console.log('Form submitted');
+      onClose();
     } catch (error) {
       console.error('Form submission failed:', error);
     }
@@ -56,6 +57,8 @@ function AddTodo() {
         aria-label="Add new todo"
         variant="outline"
         colorScheme="teal"
+        size='sm'
+        borderRadius='50%'
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>

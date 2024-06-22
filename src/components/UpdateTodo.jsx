@@ -4,7 +4,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseBu
 import useAuthConfig from '../Auth/AuthConfig';
 import fetchTodos from '../utils/fetchTodos';
 
-const updateTodo = ({ id, title: initialTitle, description: initialDescription, completed: initialCompleted, isOpen, onClose }) => {
+const UpdateTodo = ({ id, title: initialTitle, description: initialDescription, completed: initialCompleted, isOpen, onClose }) => {
   const [title, setTitle] = useState(initialTitle);
   const [description, setDescription] = useState(initialDescription);
   const [completed, setCompleted] = useState(initialCompleted);
@@ -48,4 +48,4 @@ const updateTodo = ({ id, title: initialTitle, description: initialDescription, 
   );
 };
 
-export default updateTodo;
+export default UpdateTodo;
