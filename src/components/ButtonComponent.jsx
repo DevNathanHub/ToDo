@@ -19,7 +19,7 @@ export default function ButtonComponent({onClick, children, ...props}) {
     >
     
       <HStack justifyContent='center'>
-        <Text color='white'>{children}</Text>
+        <Box color='white'>{children}</Box>
         <FaArrowRightLong/>
       </HStack>
      

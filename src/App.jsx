@@ -5,11 +5,12 @@ import Signup from './UI/Signup';
 import Login from './UI/Login';
 import Todos from './UI/Todos';
 import './App.css';
+import { VStack } from '@chakra-ui/react';
 
 export default function App() {
   return (
     <Router>
-    <div className='app'>
+    <VStack className='app'>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -17,7 +18,7 @@ export default function App() {
         <Route path="/todos" element={<Todos />} />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
-    </div>
+    </VStack>
     </Router>
   );
 }
