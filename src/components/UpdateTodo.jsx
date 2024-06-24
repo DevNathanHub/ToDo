@@ -5,11 +5,11 @@ import {
   ModalCloseButton, FormControl, FormLabel, Input, Checkbox, Button,
   ModalFooter
 } from '@chakra-ui/react';
-import useAuthConfig from '../Auth/AuthConfig';
-import fetchTodos from '../utils/fetchTodos';
+import useAuthConfig from '../Utils/AuthConfig';
+import fetchTodos from '../Utils/fetchTodos';
 import { useUser } from '../context/UserContext';
 import './Update.css';
-import { baseUrl } from '../utils/baseUrl';
+import { baseUrl } from '../Utils/baseUrl';
 
 const UpdateTodo = ({ id, title: initialTitle, description: initialDescription, completed: initialCompleted, isOpen, onClose }) => {
   const [title, setTitle] = useState(initialTitle);

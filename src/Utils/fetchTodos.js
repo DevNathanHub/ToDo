@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useTodos } from '../context/TodosContext';
-import useAuthConfig from '../Auth/AuthConfig';
+import useAuthConfig from '../Utils/AuthConfig';
 
 const fetchTodos = async () => {
     const { setTodos } = useTodos();

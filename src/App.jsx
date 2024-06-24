@@ -5,12 +5,13 @@ import Signup from './UI/Signup';
 import Login from './UI/Login';
 import Todos from './UI/Todos';
 import './App.css';
-import { VStack } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 
 export default function App() {
   return (
+    <Box w='100%' className='app'>
     <Router>
-    <VStack className='app'>
+    <VStack  w='100%'>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -20,5 +21,6 @@ export default function App() {
       </Routes>
     </VStack>
     </Router>
+    </Box>
   );
 }

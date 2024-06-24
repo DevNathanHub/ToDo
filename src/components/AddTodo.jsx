@@ -15,11 +15,12 @@ import {
   ModalBody,
   ModalCloseButton,
   IconButton,
+  Box,
 } from '@chakra-ui/react';
 import { useUser } from '../context/UserContext';
-import useAuthConfig from '../Auth/AuthConfig';
+import useAuthConfig from '../Utils/AuthConfig';
 import { FaPlusCircle } from 'react-icons/fa';
-import { baseUrl } from '../utils/baseUrl';
+import { baseUrl } from '../Utils/baseUrl';
 
 function AddTodo() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,7 +52,7 @@ function AddTodo() {
   };
 
   return (
-    <div>
+    <Box mr={4}>
       <IconButton
         icon={<FaPlusCircle />}
         onClick={onOpen}
@@ -102,7 +103,7 @@ function AddTodo() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </div>
+    </Box>
   );
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { baseUrl } from '../utils/baseUrl';
+import { baseUrl } from './baseUrl';
 
 export async function signup(formData) {
   const { fullName, email, password } = formData;

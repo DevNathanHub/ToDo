@@ -4,21 +4,27 @@ import { useTodos } from '../context/TodosContext';
 import { FaTrash, FaPen } from 'react-icons/fa6';
 import { CiEdit } from "react-icons/ci";
 import axios from 'axios';
-import useAuthConfig from '../Auth/AuthConfig';
+import useAuthConfig from '../Utils/AuthConfig';
 import UpdateTodo from './UpdateTodo';
 import AddTodo from './AddTodo';
 import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns';
 import { useUser } from '../context/UserContext';
 import './Update.css';
-import { baseUrl } from '../utils/baseUrl';
+import { baseUrl } from '../Utils/baseUrl';
+import { useNavigate } from 'react-router-dom';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false); // State for modal
   const [selectedTodo, setSelectedTodo] = useState(null); // State to store selected todo
   const config = useAuthConfig();
-  const { user } = useUser();
+  const { user, token } = useUser();
   const userId = user._id;
+  const navigate = useNavigate();
+
+  if(!token){
+   navigate('/login');
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +40,6 @@ const TodoList = () => {
   }, [config]);
 
   const handleDelete = async (id) => {
-    console.log(userId);
     try {
       await axios.delete(`${baseUrl}/api/todos/${id}`, {
         data: { userId },
@@ -69,9 +74,9 @@ const TodoList = () => {
   };
   
   return (
-    <VStack>
-      <HStack gap={6} align="start" justifyContent='space-between' w='100%' px={2}>
-        <Heading>TodoList</Heading>
+    <VStack w='100%' >
+      <HStack gap={4} align="start" justifyContent='space-between' w='100%' px={2} >
+        <Heading ml={4}>TodoList</Heading>
         <AddTodo />
       </HStack>
       <Box
@@ -85,14 +90,22 @@ const TodoList = () => {
         {todos && todos.length > 0 ? (
           todos.map((todo) => (
             <VStack key={todo._id} align="start" borderWidth="1px" p="4" borderRadius="20px" w="100%" mb={2} className='glass'>
-              <HStack align="start" justifyContent='space-between' w="100%">
-                <HStack gap={4}>
-                  <Tag colorScheme={todo.completed ? 'green' : 'red'} variant={todo.completed ? 'solid' : 'outline'} cursor='none'>
+              <HStack align="start"  w="100%">
+               <VStack  w='100%'>
+                <HStack gap={4} width='100%'>
+                  <Tag colorScheme={todo.completed ? 'green' : 'red'} variant={todo.completed ? 'solid' : 'outline'} cursor='none' >
                     {todo.completed ? 'Done' : 'NotYet'}
                   </Tag>
                   <Heading size="md">{todo.title}</Heading>
                 </HStack>
-                <HStack>
+                <HStack display='flex' alignItems='flex-start' w='100%'>
+                <Text >{todo.description}</Text>
+               </HStack>
+               </VStack>
+                <VStack borderWidth='1px' borderRadius='60px' >  
+                 
+      
+
                   <IconButton
                     onClick={() => openUpdateModal(todo)}
                     colorScheme='teal'
@@ -100,7 +113,10 @@ const TodoList = () => {
                     icon={<FaPen />}
                     size='sm'
                     variant='ghost'
+                    borderRadius='60px'
+                    borderBottom='unset'
                   />
+                  <Divider/>
                   <IconButton
                     onClick={() => handleDelete(todo._id)}
                     colorScheme='red'
@@ -108,17 +124,18 @@ const TodoList = () => {
                     icon={<FaTrash />}
                     size='sm'
                     variant='ghost'
+                    borderRadius='60px'
+                    borderTop='unset'
+
                   />
-                </HStack>
+                </VStack>
               </HStack>
-              <HStack>
-                <Text>{todo.description}</Text>
-              </HStack>
+             
               <HStack width='100%'>
-                <Tag fontSize='xs' w='200px' variant='ghost' > {formatDate(todo.createdAt)}</Tag>
+                <Tag fontSize='xs' minW='130px' maxW='40%' variant='ghost' > {formatDate(todo.createdAt)}</Tag>
                 <Divider color='black'/>
                 {todo && todo.createdAt !== todo.updatedAt ? (
-                  <Tag fontSize='xs' w='200px' variant='outline'>
+                  <Tag fontSize='xs' minW='130px' maxW='40%' variant='outline' borderRadius='60px'>
                     <TagLeftIcon as={CiEdit} /> {formatDate(todo.updatedAt)}
                   </Tag>
                 ) : (

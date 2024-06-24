@@ -1,7 +1,4 @@
-// theme.js
-
-import { extendTheme } from '@chakra-ui/react';
-import { color } from 'framer-motion';
+import { extendTheme, position } from '@chakra-ui/react';
 
 const customTheme = extendTheme({
   initialColorMode: 'light',
@@ -9,7 +6,7 @@ const customTheme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: '#BFD3DD',
+        bg: '#FFFFFF',
       },
     },
   },
@@ -21,16 +18,32 @@ const customTheme = extendTheme({
       },
     },
     Text: {
-        baseStyle: {
-          color: 'black',
+      baseStyle: {
+        color: 'black',
+      },
+    },
+    Input: {
+      variants: {
+        filled: {
+          field: {
+            bg: 'gray.100',
+            _hover: {
+              bg: 'gray.200',
+            },
+            _focus: {
+              bg: 'gray.200',
+              borderColor: 'gray.500',
+            },
+          },
         },
       },
-      Divider: {
-        baseStyle: {
-          borderColor: '#3A2407', // Set the divider color to black
-        },
+    },
+    Divider: {
+      baseStyle: {
+        borderColor: '#3A2407',
       },
-    
+    },
+   
   },
 });
 

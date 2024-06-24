@@ -7,6 +7,7 @@ export default function ButtonComponent({onClick, children, ...props}) {
     <Box
         as='button'
         p={2}
+        mb={4}
         color='white'
         fontWeight='bold'
         borderRadius='60px'
